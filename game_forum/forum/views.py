@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Category, Forum, Post, Topic
+
+
+def index(request):
+    return render(request, 'forum/index.html', {
+        'categories': Category.objects.prefetch_related('forums'),
+    })
