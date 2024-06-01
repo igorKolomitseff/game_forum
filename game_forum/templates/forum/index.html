@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+  Главная страница
+{% endblock %}
+{% block content %}
+  <h2>Категории и Форумы</h2>
+  {% for category in categories %}
+    <div class="category-container">
+      <h3 class="category-title">{{ category.title }}</h3>
+      {% for forum in category.forums.all %}
+        <p>
+          {{ forum.title }}
+          {% comment %} <a class="forum-link" href="{% url <'forum_detail' forum.pk %}>">{{ forum.title }}</a> {% endcomment %}
+        </p>
+      {% endfor %}
+    </div>
+    {% empty %}
+      <p>Нет доступных категорий.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
