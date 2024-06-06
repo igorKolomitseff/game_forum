@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+  Тема: {{ topic.title }}
+{% endblock %}
+{% block content %}
+  <p>
+    <small>
+      {{ topic.created_at|date:"d E Y" }} | 
+      От автора @{{ topic.author.nickname }}
+    </small>
+  </p>
+  <h1>Тема: {{ topic.title }}</h1>
+  {% for post in posts_list %}
+    <div class="container">
+      <p>
+        <small>
+          {{ post.created_at|date:"d E Y" }} | 
+          От автора @{{ post.author.nickname }}
+        </small>
+      </p>
+      <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}
+  Темы в форуме «{{ forum.title }}»
+{% endblock %}
+{% block content %}
+  <h1>Темы в форуме «{% include "includes/forum_link.html" %}»</h1>
+  <p >{{ forum.description|linebreaksbr }}</p>
+  <div class="container">
+    {% for topic in topics_list %}
+      <p>
+        {% include "includes/topic_link.html" %}
+      </p>
+    {% empty %}
+      <p>Нет доступных тем.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
