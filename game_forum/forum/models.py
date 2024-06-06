@@ -26,7 +26,7 @@ class TimeModel(models.Model):
         abstract = True
 
 
-class TitleSlugDescriptionModel(models.Model):
+class TitleSlugModel(models.Model):
     title = models.CharField(
         max_length=150,
         verbose_name='Название'
@@ -36,17 +36,17 @@ class TitleSlugDescriptionModel(models.Model):
         unique=True,
         always_update=True
     )
-    description = models.TextField(
-        blank=True,
-        default='',
-        verbose_name='Описание'
-    )
 
     class Meta:
         abstract = True
 
 
-class Category(TitleSlugDescriptionModel):
+class Category(TitleSlugModel):
+    description = models.TextField(
+        blank=True,
+        default='',
+        verbose_name='Описание'
+    )
 
     class Meta:
         verbose_name = 'категория'
@@ -60,7 +60,12 @@ class Category(TitleSlugDescriptionModel):
         )
 
 
-class Forum(TitleSlugDescriptionModel):
+class Forum(TitleSlugModel):
+    description = models.TextField(
+        blank=True,
+        default='',
+        verbose_name='Описание'
+    )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -81,7 +86,7 @@ class Forum(TitleSlugDescriptionModel):
         )
 
 
-class Topic(TimeModel, TitleSlugDescriptionModel):
+class Topic(TimeModel, TitleSlugModel):
     forum = models.ForeignKey(
         Forum,
         on_delete=models.CASCADE,
