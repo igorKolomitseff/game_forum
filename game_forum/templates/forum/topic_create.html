@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if '/edit_topic/' in request.path %}
+    Редактирование темы
+  {% elif "/delete_topic/" in request.path %}
+    Удаление темы
+  {% else %}
+    Добавление темы
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      {% if not '/delete_topic/' in request.path %}
+        {{ topic_form.as_p }}
+      {% else %}
+        <h3>Удалить тему?</h3>
+        <p>Тема: {{ topic_form.instance.title }}</p>
+      {% endif %}
+      {% if '/edit_topic/' not in request.path or '/delete_topic/' not in request.path %}
+        {{ post_form.as_p }}
+      {% endif %}
+      <input type="submit" value="Отправить">
+    </form>
+  </div>
+{% endblock %}

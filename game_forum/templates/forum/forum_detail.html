@@ -4,14 +4,36 @@
 {% endblock %}
 {% block content %}
   <h1>Темы в форуме «{% include "includes/forum_link.html" %}»</h1>
+  <a 
+    href="{% url 'forum:create_topic' forum.slug %}"
+    class="link"
+    >
+    Добавить тему
+  </a>
   <p >{{ forum.description|linebreaksbr }}</p>
-  <div class="container">
-    {% for topic in topics_list %}
+  {% for topic in topics %}
+    <div class="container">
       <p>
-        {% include "includes/topic_link.html" %}
+        <p>{% include "includes/topic_link.html" %}</p>
+        <button>
+          <a 
+            href="{% url 'forum:edit_topic' forum.slug topic.slug %}"
+            class="link"
+            >
+            Изменить тему
+          </a>
+        </button>
+        <button>
+          <a 
+            href="{% url 'forum:delete_topic' forum.slug topic.slug %}"
+            class="link"
+            >
+            Удалить тему
+          </a>
+        </button>
       </p>
-    {% empty %}
-      <p>Нет доступных тем.</p>
-    {% endfor %}
-  </div>
+    </div>
+  {% empty %}
+    <p>Нет доступных тем.</p>
+  {% endfor %}
 {% endblock %}

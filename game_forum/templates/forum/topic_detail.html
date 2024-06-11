@@ -5,20 +5,70 @@
 {% block content %}
   <p>
     <small>
-      {{ topic.created_at|date:"d E Y" }} | 
-      От автора @{{ topic.author.nickname }}
+      {{ topic.created_at|date:"d E Y в H:i" }}
+      {% if topic.created_at != topic.updated_at %}
+        (изменено: {{ topic.updated_at|date:"d E Y в H:i" }})
+      {% endif %}
+       | От автора @{{ topic.author.nickname }} 
     </small>
   </p>
   <h1>Тема: {{ topic.title }}</h1>
-  {% for post in posts_list %}
-    <div class="container">
+  <button>
+    <a
+      href="{% url 'forum:edit_topic' forum.slug topic.slug %}"
+      class="link"
+      >
+      Изменить тему
+    </a>
+  </button>
+  <button>
+    <a 
+      href="{% url 'forum:delete_topic' forum.slug topic.slug %}"
+      class="link"
+      >
+      Удалить тему
+    </a>
+  </button>
+  {% for post in posts %}
+    <div class="container" id="post-{{ post.id }}">
       <p>
         <small>
-          {{ post.created_at|date:"d E Y" }} | 
-          От автора @{{ post.author.nickname }}
+          {{ post.created_at|date:"d E Y в H:i" }}
+          {% if post.created_at != post.updated_at %}
+            (изменено: {{ post.updated_at|date:"d E Y в H:i" }})
+          {% endif %}
+          | От автора @{{ post.author.nickname }} 
         </small>
       </p>
       <p>{{ post.text|linebreaksbr }}</p>
+      <button>
+        <a 
+          href="{% url 'forum:edit_post' topic.slug post.id %}#form-section"
+          class="link"
+          >
+          Изменить запись
+        </a>
+      </button>
+      <button>
+        <a 
+          href="{% url 'forum:delete_post' topic.slug post.id %}#form-section"
+          class="link"
+          >
+          Удалить запись
+        </a>
+      </button>
     </div>
   {% endfor %}
+  <div class="container" id="form-section" >
+    <form method="post">
+      {% csrf_token %}
+      {% if "/delete_post/" not in request.path %}
+        {{ form.as_p }}
+      {% else %}
+        <h3>Удалить запись?</h3>
+        <p>{{ form.instance.text|linebreaksbr }}</p>
+      {% endif %}
+      <input type="submit" value="Отправить">
+    </form>
+  </div>
 {% endblock %}
