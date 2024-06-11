@@ -115,10 +115,11 @@ class Topic(TimeModel, TitleSlugModel):
 
 
 class Post(TimeModel):
-    text = models.TextField()
+    text = models.TextField(verbose_name='Текст публикации')
     topic = models.ForeignKey(
         Topic,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Тема'
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
