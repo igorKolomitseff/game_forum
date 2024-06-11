@@ -4,17 +4,19 @@
 {% endblock %}
 {% block content %}
   <h2>Категории и Форумы</h2>
+  <hr>
   {% for category in categories %}
-    <div class="container">
-      <h3>{% include "includes/category_link.html" %}</h3>
-      {% for forum in category.forums.all %}
+    <h3>{% include "includes/category_link.html" %}</h3>
+    {% for forum in category.forums.all %}
+      <div class="container">
         <p>
           {% include "includes/forum_link.html" %}
         </p>
-      {% empty %}
-        <p>Нет доступных форумов.</p>
-      {% endfor %}
-    </div>
+      </div>
+    {% empty %}
+      <p>Нет доступных форумов.</p>
+    {% endfor %}
+  {% empty %}
+    <p>Нет доступных категорий.</p>
   {% endfor %}
-  </div>
 {% endblock %}
