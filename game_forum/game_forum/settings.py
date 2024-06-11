@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'pages.apps.PagesConfig',
     'users.apps.UsersConfig',
     'forum.apps.ForumConfig',
+    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [
